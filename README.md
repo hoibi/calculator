@@ -35,3 +35,42 @@ git이 데이터를 저장하는 방법
     - git의 브랜치는 커밋을 가리키는 포인터(브랜치.png)
 
 브랜치를 변경한다 -> checkout한다.
+
+Git-flow
+    - 브랜치 관리 모델 중 하나로 Vincent Driessen이 주장
+
+    메인 브랜치
+    - 아래 두 브랜치는 항상 존재하는 메인 브랜치
+        - master(main)
+            - master(main) 브랜치는 배포된 소스가 있습니다.
+        - develop
+            - 다음 배포를 위한 소스가 있습니다.
+            - 개발이 완료되면 일련의 과정을 통해 master(main)로 머지합니다.
+
+    서포팅 브랜치
+    - master과 develop 외에 팀 멤버들이 병렬로 일할 수 있도록 도와주는 브랜치가 있습니다.
+    - 메인 브랜치와는 다르게 필요할 때 생성하였다가 삭제합니다.
+        1. feature 브랜치
+        2. release 브랜치
+        3. hotfix 브랜치
+
+    1. feature 브랜치
+        - 브랜치 생성: develop으로 부터
+        - 머지: develop으로
+        - prefix: feature/
+        - feature 브랜치는 특정 기능 하나에 대하여 develop으로부터 생성하여 개발하며 개발이 완료되면 다시 develop브랜치로 머지합니다.
+        - 이때 각 기능 별로 개발한 커밋을 구별할 수 있도록 fast-forward를 사용하지 않습니다.
+
+        fast-forward란? 머지를 할 때 머지 커밋을 굳이 만들지 않아도 될 경우에 브랜치의 포인터를 당겨주는 것만으로 머지가 이루어지는 것
+
+    2. release 브랜치
+        - 브랜치 생성: develop으로 부터
+        - 머지: develop고 master로
+        - prefix: release/
+        - release 브랜치는 배포를 위한 준비를 할 수 있는 브랜치입니다.
+        - release 브랜치는 develop 브랜치에 다음 배포를 위한 기능의 개발이 모두 완료되어 머지된 후 develop으로부터 생성합니다.
+        - release 브랜치에서는 각종 메타 데이터 (버전 명 등)을 변경하거나 작은 버그를 수정합니다.
+        - 배포 준비가 완료되면 release 브랜치를 master와 develop에 각각 머지합니다.
+        - master에는 버전 태그를 붙입니다.
+        - release 브랜치를 따로 가져가기 때문에 develop 브랜치에서는 바로 다음 배포를 위한 기능을 시작할 수 있습니다.
+        - 그리고 release 브랜치를 다시 develop으로 머지하기 때문에 release 브랜치의 변경 사항이 develop에 반영됩니다.
